@@ -3,6 +3,23 @@
 
 let seventvEmotes = {};
 let client = null;
+const usernameColors = {};
+const colorPalette = [
+  '#FF69B4', '#1E90FF', '#32CD32', '#FFD700', '#FF4500', '#00CED1', '#DA70D6', '#FF6347', '#7FFF00', '#00BFFF',
+  '#FF1493', '#ADFF2F', '#FFA500', '#20B2AA', '#BA55D3', '#00FF7F', '#DC143C', '#00FA9A', '#8A2BE2', '#FFB6C1'
+];
+function getUsernameColor(username) {
+  if (!usernameColors[username]) {
+    // Assign a color based on hash for consistency
+    let hash = 0;
+    for (let i = 0; i < username.length; i++) {
+      hash = username.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = colorPalette[Math.abs(hash) % colorPalette.length];
+    usernameColors[username] = color;
+  }
+  return usernameColors[username];
+}
 
 // Fetch 7TV emotes for the channel
 async function fetch7TVEmotes(channel) {
@@ -36,8 +53,13 @@ function addMessage(username, message) {
   const chat = document.getElementById('chat-container');
   const div = document.createElement('div');
   div.className = 'chat-message';
-  div.innerHTML = `<span class=\"username\">${username}:</span> ${parseEmotes(message)}`;
+  const color = getUsernameColor(username.toLowerCase());
+  div.innerHTML = `<span class=\"username\" style=\"--username-color: ${color}\">${username}:</span> ${parseEmotes(message)}`;
   chat.appendChild(div);
+  // Limit to last 20 messages
+  while (chat.children.length > 20) {
+    chat.removeChild(chat.firstChild);
+  }
   chat.scrollTop = chat.scrollHeight;
 }
 
