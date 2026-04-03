@@ -3,27 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Twitch Chat Overlay with 7TV</title>
+  <title>Twitch Chat Overlay v2</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="setup-container">
-    <form id="username-form">
-      <label for="username-input">Twitch Username:</label>
-      <input type="text" id="username-input" placeholder="Enter Twitch username" required />
-      <button type="submit">Open Overlay</button>
-    </form>
-  </div>
-  <script>
-    document.getElementById('username-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('username-input').value.trim().toLowerCase();
-      if (!username) return;
-      const url = window.location.origin + window.location.pathname + '?user=' + encodeURIComponent(username);
-      window.open(url, '_blank');
-    });
-  </script>
+  <div id="chat-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/tmi.js@1.8.5/dist/tmi.min.js"></script>
+  <script src="overlay.js"></script>
 </body>
 </html>
-
-
