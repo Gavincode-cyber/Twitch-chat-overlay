@@ -1,29 +1,143 @@
 body {
+  min-height: 100vh;
   margin: 0;
-  background: transparent;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
   font-family: 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+#setup-container {
+  background: rgba(30, 34, 44, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  padding: 36px 32px 28px 32px;
+  min-width: 340px;
+  max-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#username-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+#username-form label {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+
+#username-input {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  font-size: 1rem;
+  background: #23272f;
+  color: #fff;
+  outline: none;
+  transition: border 0.2s;
+}
+#username-input:focus {
+  border: 1.5px solid #1e90ff;
+}
+
+#username-form button {
+  background: linear-gradient(90deg, #1e90ff 0%, #7f53ac 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(30,144,255,0.12);
+  transition: background 0.2s, transform 0.1s;
+}
+#username-form button:hover {
+  background: linear-gradient(90deg, #7f53ac 0%, #1e90ff 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+
+#overlay-url-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+#overlay-url {
+  padding: 9px 10px;
+  border-radius: 7px;
+  border: 1px solid #444;
+  background: #23272f;
+  color: #fff;
+  font-size: 0.98rem;
+  width: 80%;
+  outline: none;
+}
+#copy-url {
+  background: linear-gradient(90deg, #1e90ff 0%, #7f53ac 100%);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 8px 16px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(30,144,255,0.12);
+  transition: background 0.2s, transform 0.1s;
+}
+#copy-url:hover {
+  background: linear-gradient(90deg, #7f53ac 0%, #1e90ff 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+
 #chat-container {
   width: 400px;
+  max-width: 95vw;
   max-height: 600px;
   overflow-y: auto;
-  background: rgba(24, 24, 24, 0.7);
-  border-radius: 12px;
-  padding: 16px;
+  background: rgba(24, 24, 24, 0.82);
+  border-radius: 14px;
+  padding: 18px;
   color: #fff;
   box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  margin: 0 auto;
 }
 .chat-message {
-  margin-bottom: 12px;
-  line-height: 1.5;
+  margin-bottom: 13px;
+  line-height: 1.6;
   word-break: break-word;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
 }
 .username {
   font-weight: bold;
   margin-right: 8px;
   color: #1e90ff;
+  text-shadow: 0 1px 4px #0008;
 }
 .emote {
   vertical-align: middle;
   height: 32px;
+  margin: 0 2px;
+  filter: drop-shadow(0 1px 2px #000a);
+}
+
+@media (max-width: 600px) {
+  #setup-container, #chat-container {
+    min-width: unset;
+    padding: 16px 4vw 14px 4vw;
+  }
+  #chat-container {
+    width: 98vw;
+    max-width: 98vw;
+    padding: 10px 2vw;
+  }
 }
