@@ -1,7 +1,7 @@
 body {
   min-height: 100vh;
   margin: 0;
-  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  background: transparent;
   font-family: 'Segoe UI', Arial, sans-serif;
   display: flex;
   align-items: center;
@@ -98,6 +98,12 @@ body {
   transform: translateY(-2px) scale(1.04);
 }
 
+.overlay-only #setup-container {
+  display: none !important;
+}
+.overlay-only body {
+  background: transparent !important;
+}
 #chat-container {
   width: 400px;
   max-width: 95vw;
@@ -109,6 +115,13 @@ body {
   color: #fff;
   box-shadow: 0 4px 24px rgba(0,0,0,0.4);
   margin: 0 auto;
+}
+.overlay-only #chat-container {
+  background: rgba(24, 24, 24, 0.0) !important;
+  box-shadow: none !important;
+  color: #fff;
+  padding: 0 0 0 0;
+  border-radius: 0;
 }
 .chat-message {
   margin-bottom: 13px;
