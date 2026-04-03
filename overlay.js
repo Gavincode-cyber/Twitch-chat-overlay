@@ -7,13 +7,10 @@ let client = null;
 // Fetch 7TV emotes for the channel
 async function fetch7TVEmotes(channel) {
   try {
-    // Get channel ID from Twitch API
     const userRes = await fetch(`https://api.ivr.fi/v2/twitch/user?login=${channel}`);
     const userData = await userRes.json();
     const channelId = userData[0]?.id;
     if (!channelId) return;
-
-    // Get 7TV emotes for the channel
     const res = await fetch(`https://7tv.io/v3/users/twitch/${channelId}`);
     const data = await res.json();
     if (data.emote_set && data.emote_set.emotes) {
@@ -26,7 +23,6 @@ async function fetch7TVEmotes(channel) {
   }
 }
 
-// Parse message and replace emote codes with images
 function parseEmotes(message) {
   return message.split(/(\s+)/).map(word => {
     if (seventvEmotes[word]) {
@@ -36,7 +32,6 @@ function parseEmotes(message) {
   }).join('');
 }
 
-// Add message to chat overlay
 function addMessage(username, message) {
   const chat = document.getElementById('chat-container');
   const div = document.createElement('div');
@@ -46,7 +41,6 @@ function addMessage(username, message) {
   chat.scrollTop = chat.scrollHeight;
 }
 
-// Connect to Twitch chat for a given channel
 async function startChat(channel) {
   document.getElementById('chat-container').innerHTML = '';
   seventvEmotes = {};
@@ -64,20 +58,18 @@ async function startChat(channel) {
   });
 }
 
-// Handle username form
+// Utility to get URL parameter
+function getQueryParam(name) {
+  const url = new URL(window.location.href);
+  return url.searchParams.get(name);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('username-form');
-  const input = document.getElementById('username-input');
-  const setupContainer = document.getElementById('setup-container');
   const chatContainer = document.getElementById('chat-container');
-  if (form && input) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const username = input.value.trim().toLowerCase();
-      if (!username) return;
-      setupContainer.style.display = 'none';
-      chatContainer.style.display = '';
-      await startChat(username);
-    });
+  const username = getQueryParam('user');
+  if (username) {
+    if (chatContainer) chatContainer.style.display = '';
+    if (document.getElementById('setup-container')) document.getElementById('setup-container').style.display = 'none';
+    startChat(username);
   }
 });
