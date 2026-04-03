@@ -1,6 +1,4 @@
-// overlay.js
-// Twitch Chat Overlay with 7TV emote support
-
+// v2 overlay.js
 let seventvEmotes = {};
 let client = null;
 const usernameColors = {};
@@ -10,7 +8,6 @@ const colorPalette = [
 ];
 function getUsernameColor(username) {
   if (!usernameColors[username]) {
-    // Assign a color based on hash for consistency
     let hash = 0;
     for (let i = 0; i < username.length; i++) {
       hash = username.charCodeAt(i) + ((hash << 5) - hash);
@@ -19,6 +16,12 @@ function getUsernameColor(username) {
     usernameColors[username] = color;
   }
   return usernameColors[username];
+}
+
+// Parse URL params
+function getParam(name, def = null) {
+  const url = new URL(window.location.href);
+  return url.searchParams.get(name) || def;
 }
 
 // Fetch 7TV emotes for the channel
@@ -80,20 +83,33 @@ async function startChat(channel) {
   });
 }
 
-// Utility to get URL parameter
-function getQueryParam(name) {
-  const url = new URL(window.location.href);
-  return url.searchParams.get(name);
+// Apply font size, shadow, and emote size from params
+function applyCustomizations() {
+  const size = parseFloat(getParam('size', '1'));
+  const font = parseInt(getParam('font', '11'), 10);
+  const shadow = getParam('shadow', '1') === '1';
+  const chat = document.getElementById('chat-container');
+  if (chat) {
+    chat.style.fontSize = font + 'pt';
+    chat.querySelectorAll('.chat-message').forEach(msg => {
+      msg.style.fontSize = font + 'pt';
+      if (shadow) {
+        msg.style.textShadow = '0 1px 4px #0008';
+      } else {
+        msg.style.textShadow = 'none';
+      }
+    });
+    chat.querySelectorAll('.emote').forEach(emote => {
+      emote.style.height = (40 * size) + 'px';
+    });
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const chatContainer = document.getElementById('chat-container');
-  const username = getQueryParam('user');
-  if (username) {
-    // Add overlay-only class to body for transparent, chat-only mode
-    document.body.classList.add('overlay-only');
-    if (chatContainer) chatContainer.style.display = '';
-    if (document.getElementById('setup-container')) document.getElementById('setup-container').style.display = 'none';
-    startChat(username);
+// On load
+window.addEventListener('DOMContentLoaded', () => {
+  const channel = getParam('channel');
+  if (channel) {
+    startChat(channel);
+    setInterval(applyCustomizations, 500); // Re-apply in case of new messages
   }
 });
