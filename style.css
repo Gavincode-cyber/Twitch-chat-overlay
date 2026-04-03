@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  background: transparent;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+#chat-container {
+  width: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  background: rgba(24, 24, 24, 0.7);
+  border-radius: 12px;
+  padding: 16px;
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.chat-message {
+  margin-bottom: 12px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.username {
+  font-weight: bold;
+  margin-right: 8px;
+  color: #1e90ff;
+}
+.emote {
+  vertical-align: middle;
+  height: 32px;
+}
