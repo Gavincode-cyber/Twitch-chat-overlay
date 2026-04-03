@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const chatContainer = document.getElementById('chat-container');
   const username = getQueryParam('user');
   if (username) {
+    // Add overlay-only class to body for transparent, chat-only mode
+    document.body.classList.add('overlay-only');
     if (chatContainer) chatContainer.style.display = '';
     if (document.getElementById('setup-container')) document.getElementById('setup-container').style.display = 'none';
     startChat(username);
